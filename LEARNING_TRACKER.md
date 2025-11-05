@@ -16,11 +16,6 @@
 - ✅ Cache management endpoints
 - ✅ Complete URL shortener system design
 
-#### Real Performance Results
-- Database query: 2010ms
-- Redis cache hit: 3ms
-- **670x performance improvement!** 🚀
-
 #### System Design Practice
 - ✅ URL Shortener design (45 min)
 - Designed API endpoints
@@ -28,6 +23,11 @@
 - Drew architecture diagram
 - Figured out Base62 encoding approach
 - Connected Redis learning to real system design
+
+#### Real Performance Results
+- Database query: 2010ms
+- Redis cache hit: 3ms
+- **670x performance improvement!** 🚀
 
 #### Key Insights
 - Read-heavy systems NEED caching
@@ -37,18 +37,17 @@
 - Cache-aside pattern works great for read-heavy apps
 
 #### Time Spent
-- 3.5 hours total
-- Redis learning: 2 hours
-- System design: 1.5 hours
+- 4 hours total
 
 #### Tomorrow's Plan
-- Deep dive Redis data structures (Lists, Sets, Sorted Sets, Hashes)
 - Build rate limiter with Redis
-- LeetCode: Two Sum, LRU Cache
-- Maybe another system design (Twitter feed or Instagram)
+- Deep dive Redis data structures (Lists, Sets, Sorted Sets, Hashes)
+- Another system design (Twitter feed or Instagram)
+- Apply to 5 UK backend jobs
 
-#### Notes to Self
-- Redis is way easier than I thought
-- System design is fun when you connect it to real code
-- Need to practice more capacity estimation math
-- Should actually implement the URL shortener this week
+---
+
+### Day 2 - November 6, 2025
+**Focus:** Redis Data Structures + Rate Limiting
+
+Coming soon...
