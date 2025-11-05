@@ -39,4 +39,12 @@ Master's student in Computer Science at George Mason University, seeking backend
 ## 📈 Daily Progress
 
 ### Week 1: Foundation
-- **Day 1**: Setting up environment ⏳
+#### Day 1 - Nov 5, 2025 ✅
+**Redis Mastery + System Design**
+- Built Redis cache server (670x performance boost!)
+- Designed complete URL shortener system
+- Learned Base62 encoding and caching strategies
+- [Redis Project](./redis-basics/simple-cache-server/) | [System Design](./system-design-notes/url-shortener.md)
+
+#### Day 2 - Nov 6, 2025
+Coming soon...
