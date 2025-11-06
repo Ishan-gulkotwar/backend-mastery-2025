@@ -1,4 +1,4 @@
-### Day 1 - November 5, 2025 ✅
+
 **Focus:** Redis Basics + System Design
 
 #### What I Learned
@@ -17,7 +17,7 @@
 - ✅ Complete URL shortener system design
 
 #### System Design Practice
-- ✅ URL Shortener design (45 min)
+- ✅ URL Shortener design
 - Designed API endpoints
 - Planned database schema
 - Drew architecture diagram
@@ -36,16 +36,17 @@
 - Always think about scaling from the start
 - Cache-aside pattern works great for read-heavy apps
 
-#### Time Spent
-- 4 hours total
+#### Evening Bonus Session
+- ✅ Built production-ready rate limiter
+- ✅ Implemented 3 strategies (Fixed Window, Sliding Window, Token Bucket)
+- ✅ Successfully tested - blocked 6th request with 429 error
+- ✅ Learned Redis sorted sets and atomic operation
 
-#### Tomorrow's Plan
-- Build rate limiter with Redis
-- Deep dive Redis data structures (Lists, Sets, Sorted Sets, Hashes)
-- Another system design (Twitter feed or Instagram)
-- Apply to 5 UK backend jobs
-
----
+####  Final Stats
+**Projects:** 3 (Cache server, URL shortener design, Rate limiter)  
+**Lines of Code:** ~500  
+**Performance Gains:** 670x with caching  
+**Skills Added:** Redis, System Design, Rate Limiting, Docker
 
 ### Day 2 - November 6, 2025
 **Focus:** Redis Data Structures + Rate Limiting
