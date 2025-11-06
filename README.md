@@ -1,4 +1,4 @@
-# Backend Mastery 2025 
+# Backend Mastery 
 
 90-day intensive learning journey to master backend development, focusing on skills needed for software engineering roles.
 
