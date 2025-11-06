@@ -48,7 +48,20 @@
 **Performance Gains:** 670x with caching  
 **Skills Added:** Redis, System Design, Rate Limiting, Docker
 
-### Day 2 - November 6, 2025
-**Focus:** Redis Data Structures + Rate Limiting
 
-Coming soon...
+#### Redis Data Structures
+- ✅ Learned Redis Sorted Sets (ZSET)
+- ✅ Built real-time leaderboard system
+- ✅ Implemented 8 different leaderboard operations
+- ✅ Tested with 11 players - achieved #1 rank! 👑
+- ✅ Understood O(log N) time complexity
+
+#### Redis Commands Mastered Today
+**Strings:** GET, SET, SETEX, DEL, INCR, TTL  
+**Sorted Sets:** ZADD, ZINCRBY, ZREVRANK, ZREVRANGE, ZSCORE, ZCARD, ZREM
+
+#### Day 1 Final Count
+- **Projects:** 4 (Cache, Rate Limiter, URL Shortener Design, Leaderboard)
+- **Lines of Code:** ~800
+- **Time:** 6+ hours
+- **Redis Commands:** 15+
