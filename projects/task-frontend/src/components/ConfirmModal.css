@@ -1,0 +1,137 @@
+.confirm-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+  animation: fadeIn 0.2s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.confirm-modal-content {
+  background: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.confirm-modal-header {
+  padding: 25px 25px 20px 25px;
+  border-bottom: 2px solid #f3f4f6;
+}
+
+.confirm-modal-header h3 {
+  margin: 0;
+  color: #111827;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.confirm-modal-body {
+  padding: 25px;
+}
+
+.confirm-modal-body p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.confirm-modal-actions {
+  padding: 20px 25px 25px 25px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  border-top: 2px solid #f3f4f6;
+}
+
+.btn-cancel-confirm,
+.btn-confirm-delete {
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: none;
+}
+
+.btn-cancel-confirm {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.btn-cancel-confirm:hover {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.btn-confirm-delete {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-confirm-delete:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+/* Dark mode */
+body.dark-mode .confirm-modal-content {
+  background: #0f3460;
+}
+
+body.dark-mode .confirm-modal-header {
+  border-color: #2a2a4e;
+}
+
+body.dark-mode .confirm-modal-header h3 {
+  color: #eee;
+}
+
+body.dark-mode .confirm-modal-body p {
+  color: #bbb;
+}
+
+body.dark-mode .confirm-modal-actions {
+  border-color: #2a2a4e;
+}
+
+body.dark-mode .btn-cancel-confirm {
+  background: #1a1a2e;
+  color: #bbb;
+}
+
+body.dark-mode .btn-cancel-confirm:hover {
+  background: #2a2a4e;
+  color: #eee;
+}
