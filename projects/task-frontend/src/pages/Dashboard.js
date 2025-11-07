@@ -4,12 +4,18 @@ import { useAuth } from '../context/AuthContext';
 import { tasksAPI } from '../services/api';
 import TaskList from '../components/TaskList';
 import TaskForm from '../components/TaskForm';
+import { useTheme } from '../context/ThemeContext';
 import './Dashboard.css';
 
 function Dashboard() {
+  const { darkMode, toggleDarkMode } = useTheme();
   const [tasks, setTasks] = useState([]);
+  const [filteredTasks, setFilteredTasks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [priorityFilter, setPriorityFilter] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState('date'); // date, priority, title
   const [showForm, setShowForm] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
   const { user, logout } = useAuth();
@@ -17,19 +23,61 @@ function Dashboard() {
 
   useEffect(() => {
     loadTasks();
-  }, [filter]);
+  }, []);
+
+  useEffect(() => {
+    filterAndSortTasks();
+  }, [tasks, statusFilter, priorityFilter, searchQuery, sortBy]);
 
   const loadTasks = async () => {
     setLoading(true);
     try {
-      const params = filter !== 'all' ? { status: filter } : {};
-      const response = await tasksAPI.getTasks(params);
+      const response = await tasksAPI.getTasks();
       setTasks(response.data.tasks);
     } catch (error) {
       console.error('Error loading tasks:', error);
     } finally {
       setLoading(false);
     }
+  };
+
+  const filterAndSortTasks = () => {
+    let filtered = [...tasks];
+
+    // Filter by status
+    if (statusFilter !== 'all') {
+      filtered = filtered.filter(task => task.status === statusFilter);
+    }
+
+    // Filter by priority
+    if (priorityFilter !== 'all') {
+      filtered = filtered.filter(task => task.priority === priorityFilter);
+    }
+
+    // Filter by search query
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(task =>
+        task.title.toLowerCase().includes(query) ||
+        (task.description && task.description.toLowerCase().includes(query))
+      );
+    }
+
+    // Sort tasks
+    filtered.sort((a, b) => {
+      switch (sortBy) {
+        case 'priority':
+          const priorityOrder = { high: 3, medium: 2, low: 1 };
+          return priorityOrder[b.priority] - priorityOrder[a.priority];
+        case 'title':
+          return a.title.localeCompare(b.title);
+        case 'date':
+        default:
+          return new Date(b.created_at) - new Date(a.created_at);
+      }
+    });
+
+    setFilteredTasks(filtered);
   };
 
   const handleCreateTask = async (taskData) => {
@@ -73,6 +121,13 @@ function Dashboard() {
     navigate('/login');
   };
 
+  const clearFilters = () => {
+    setStatusFilter('all');
+    setPriorityFilter('all');
+    setSearchQuery('');
+    setSortBy('date');
+  };
+
   const stats = {
     total: tasks.length,
     pending: tasks.filter(t => t.status === 'pending').length,
@@ -80,19 +135,24 @@ function Dashboard() {
     completed: tasks.filter(t => t.status === 'completed').length,
   };
 
+  const hasActiveFilters = statusFilter !== 'all' || priorityFilter !== 'all' || searchQuery.trim() !== '';
+
   return (
     <div className="dashboard">
       <header className="dashboard-header">
-        <div className="header-content">
-          <h1>📋 Task Manager</h1>
-          <div className="user-info">
-            <span>👤 {user?.username}</span>
-            <button onClick={handleLogout} className="btn-logout">
-              Logout
-            </button>
-          </div>
-        </div>
-      </header>
+  <div className="header-content">
+    <h1>📋 Task Manager</h1>
+    <div className="user-info">
+      <button onClick={toggleDarkMode} className="btn-theme" title="Toggle theme">
+        {darkMode ? '☀️' : '🌙'}
+      </button>
+      <span>👤 {user?.username}</span>
+      <button onClick={handleLogout} className="btn-logout">
+        Logout
+      </button>
+    </div>
+  </div>
+</header>
 
       <div className="dashboard-content">
         <div className="stats-grid">
@@ -116,33 +176,6 @@ function Dashboard() {
 
         <div className="tasks-section">
           <div className="tasks-header">
-            <div className="filters">
-              <button
-                className={filter === 'all' ? 'active' : ''}
-                onClick={() => setFilter('all')}
-              >
-                All
-              </button>
-              <button
-                className={filter === 'pending' ? 'active' : ''}
-                onClick={() => setFilter('pending')}
-              >
-                Pending
-              </button>
-              <button
-                className={filter === 'in_progress' ? 'active' : ''}
-                onClick={() => setFilter('in_progress')}
-              >
-                In Progress
-              </button>
-              <button
-                className={filter === 'completed' ? 'active' : ''}
-                onClick={() => setFilter('completed')}
-              >
-                Completed
-              </button>
-            </div>
-
             <button
               className="btn-add-task"
               onClick={() => setShowForm(true)}
@@ -151,11 +184,96 @@ function Dashboard() {
             </button>
           </div>
 
+          {/* Search Bar */}
+          <div className="search-section">
+            <div className="search-bar">
+              <span className="search-icon">🔍</span>
+              <input
+                type="text"
+                placeholder="Search tasks by title or description..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="search-input"
+              />
+              {searchQuery && (
+                <button
+                  className="clear-search"
+                  onClick={() => setSearchQuery('')}
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Filters */}
+          <div className="filters-section">
+            <div className="filter-group">
+              <label>Status:</label>
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="filter-select"
+              >
+                <option value="all">All Status</option>
+                <option value="pending">Pending</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
+              </select>
+            </div>
+
+            <div className="filter-group">
+              <label>Priority:</label>
+              <select
+                value={priorityFilter}
+                onChange={(e) => setPriorityFilter(e.target.value)}
+                className="filter-select"
+              >
+                <option value="all">All Priority</option>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+              </select>
+            </div>
+
+            <div className="filter-group">
+              <label>Sort By:</label>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="filter-select"
+              >
+                <option value="date">Date Created</option>
+                <option value="priority">Priority</option>
+                <option value="title">Title (A-Z)</option>
+              </select>
+            </div>
+
+            {hasActiveFilters && (
+              <button onClick={clearFilters} className="btn-clear-filters">
+                Clear Filters
+              </button>
+            )}
+          </div>
+
+          {/* Results Info */}
+          <div className="results-info">
+            {hasActiveFilters ? (
+              <p>
+                Showing <strong>{filteredTasks.length}</strong> of <strong>{tasks.length}</strong> tasks
+              </p>
+            ) : (
+              <p>
+                <strong>{tasks.length}</strong> total tasks
+              </p>
+            )}
+          </div>
+
           {loading ? (
             <div className="loading">Loading tasks...</div>
           ) : (
             <TaskList
-              tasks={tasks}
+              tasks={filteredTasks}
               onEdit={setEditingTask}
               onDelete={handleDeleteTask}
               onStatusChange={(id, status) =>
