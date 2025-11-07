@@ -1,0 +1,162 @@
+.task-list {
+  padding: 20px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+
+.empty-state h3 {
+  color: #374151;
+  margin-bottom: 10px;
+}
+
+.empty-state p {
+  color: #6b7280;
+}
+
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border: 2px solid #f3f4f6;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  transition: all 0.3s;
+  gap: 20px;
+}
+
+.task-item:hover {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+}
+
+.task-main {
+  display: flex;
+  gap: 15px;
+  flex: 1;
+  min-width: 0;
+}
+
+.task-priority {
+  width: 4px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.task-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.task-title {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  color: #111827;
+  font-weight: 600;
+}
+
+.task-description {
+  margin: 0 0 12px 0;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.task-meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.task-status {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+}
+
+.task-priority-label {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.task-date {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+.task-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.status-select {
+  padding: 8px 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.status-select:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.btn-edit,
+.btn-delete {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.3s;
+}
+
+.btn-edit {
+  background: #eff6ff;
+}
+
+.btn-edit:hover {
+  background: #dbeafe;
+  transform: scale(1.1);
+}
+
+.btn-delete {
+  background: #fef2f2;
+}
+
+.btn-delete:hover {
+  background: #fee2e2;
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .task-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .task-actions {
+    justify-content: flex-end;
+    width: 100%;
+  }
+}
