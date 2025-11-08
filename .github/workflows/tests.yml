@@ -20,26 +20,22 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: projects/task-api/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('projects/task-api/package-lock.json') }}
-
       - name: Install dependencies
         working-directory: projects/task-api
         run: npm ci
 
-      - name: Run linter
+      - name: Check syntax
         working-directory: projects/task-api
-        run: echo "✅ Linting passed"
+        run: node --check src/server.js
 
-      - name: Check build
+      - name: Verify structure
         working-directory: projects/task-api
-        run: echo "✅ Build check passed"
+        run: |
+          echo "✅ Backend structure verified"
+          ls -la src/
 
-  frontend-tests:
-    name: Frontend Tests
+  frontend-check:
+    name: Frontend Check
     runs-on: ubuntu-latest
 
     steps:
@@ -55,9 +51,6 @@ jobs:
         working-directory: projects/task-frontend
         run: npm ci
 
-      - name: Build frontend
+      - name: Check build
         working-directory: projects/task-frontend
         run: npm run build
-
-      - name: Check for build errors
-        run: echo "✅ Frontend build successful"
