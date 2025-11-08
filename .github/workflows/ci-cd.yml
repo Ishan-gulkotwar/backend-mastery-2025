@@ -66,6 +66,16 @@ jobs:
           echo "JWT_SECRET=test-secret-key-for-ci" >> .env
           echo "JWT_EXPIRES_IN=7d" >> .env
 
+      - name: Initialize database tables
+        working-directory: projects/task-api
+        run: node src/config/init-db.js
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: taskdb_test
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+
       - name: Run backend tests
         working-directory: projects/task-api
         run: npm test
