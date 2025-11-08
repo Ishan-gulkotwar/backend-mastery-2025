@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
@@ -29,24 +29,7 @@ function Dashboard() {
     loadTasks();
   }, []);
 
-  useEffect(() => {
-    filterAndSortTasks();
-  }, [tasks, statusFilter, priorityFilter, searchQuery, sortBy]);
-
-  const loadTasks = async () => {
-    setLoading(true);
-    try {
-      const response = await tasksAPI.getTasks();
-      setTasks(response.data.tasks);
-    } catch (error) {
-      console.error('Error loading tasks:', error);
-      toast.error('Failed to load tasks');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const filterAndSortTasks = () => {
+  const filterAndSortTasks = useCallback(() => {
     let filtered = [...tasks];
 
     // Filter by status
@@ -83,6 +66,23 @@ function Dashboard() {
     });
 
     setFilteredTasks(filtered);
+  }, [tasks, statusFilter, priorityFilter, searchQuery, sortBy]);
+
+  useEffect(() => {
+    filterAndSortTasks();
+  }, [filterAndSortTasks]);
+
+  const loadTasks = async () => {
+    setLoading(true);
+    try {
+      const response = await tasksAPI.getTasks();
+      setTasks(response.data.tasks);
+    } catch (error) {
+      console.error('Error loading tasks:', error);
+      toast.error('Failed to load tasks');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleCreateTask = async (taskData) => {
