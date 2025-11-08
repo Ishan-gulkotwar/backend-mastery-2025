@@ -1,3 +1,10 @@
+# Task Management Application
+
+[![CI/CD Pipeline](https://github.com/Ishan-gulkotwar/backend-mastery-2025/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/Ishan-gulkotwar/backend-mastery-2025/actions/workflows/ci-cd.yml)
+[![Tests](https://github.com/Ishan-gulkotwar/backend-mastery-2025/actions/workflows/tests.yml/badge.svg)](https://github.com/Ishan-gulkotwar/backend-mastery-2025/actions/workflows/tests.yml)
+
+Full-stack task management application with React frontend, Node.js backend, PostgreSQL, and Redis.
+
 # Backend Mastery 
 
 90-day intensive learning journey to master backend development, focusing on skills needed for software engineering roles.

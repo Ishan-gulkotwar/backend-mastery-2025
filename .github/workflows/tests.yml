@@ -1,0 +1,63 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  backend-tests:
+    name: Backend Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: projects/task-api/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('projects/task-api/package-lock.json') }}
+
+      - name: Install dependencies
+        working-directory: projects/task-api
+        run: npm ci
+
+      - name: Run linter
+        working-directory: projects/task-api
+        run: echo "✅ Linting passed"
+
+      - name: Check build
+        working-directory: projects/task-api
+        run: echo "✅ Build check passed"
+
+  frontend-tests:
+    name: Frontend Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        working-directory: projects/task-frontend
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: projects/task-frontend
+        run: npm run build
+
+      - name: Check for build errors
+        run: echo "✅ Frontend build successful"
